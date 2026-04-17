@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ME Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --steel: #1a1d23;
+    --steel-mid: #252931;
+    --steel-light: #2f333d;
+    --iron: #3a3f4a;
+    --chrome: #8b9ab0;
+    --chrome-light: #b8c5d6;
+    --accent: #e8841a;
+    --accent-dim: #c26a10;
+    --white: #f0f2f5;
+    --muted: #6b7280;
+    --danger-red: #c74444;
+    --success-green: #4a9e6a;
+    --border: rgba(139,154,176,0.15);
+    --border-accent: rgba(232,132,26,0.4);
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--steel);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(26,29,35,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--chrome);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 6rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(139,154,176,0.05) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(139,154,176,0.05) 60px);
+    pointer-events: none;
+  }
+
+  .hero-accent-bar {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  }
+
+  .hero-content { position: relative; max-width: 760px; }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block; width: 2rem; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-name span { color: var(--accent); }
+
+  .hero-title {
+    font-family: 'Barlow', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--chrome-light);
+    letter-spacing: 1px;
+    margin-bottom: 1.8rem;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--chrome);
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #111;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent-dim); transform: translateY(-2px); }
+
+  .btn-outline {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--chrome-light);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--chrome);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+
+  .section-header {
+    display: flex; align-items: center; gap: 1.2rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+
+  .section-line {
+    flex: 1; height: 1px;
+    background: var(--border);
+  }
+
+  /* SKILLS */
+  .skills-section { background: var(--steel-mid); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: var(--steel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 1.8rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+  .skill-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .skill-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .skill-tools {
+    font-size: 0.8rem;
+    color: var(--chrome);
+    font-family: 'Space Mono', monospace;
+    line-height: 1.6;
+  }
+
+  .skill-bar-wrap {
+    margin-top: 1.2rem;
+    height: 3px;
+    background: var(--iron);
+    border-radius: 0;
+  }
+  .skill-bar {
+    height: 100%;
+    background: var(--accent);
+    transition: width 1.2s ease;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .project-card {
+    background: var(--steel-mid);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .project-card:hover { transform: translateY(-4px); border-color: rgba(232,132,26,0.5); }
+
+  .project-thumb {
+    height: 180px;
+    background: var(--steel-light);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-thumb svg { opacity: 0.7; }
+
+  .project-tag {
+    position: absolute; top: 1rem; left: 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    background: var(--accent);
+    color: #111;
+    font-weight: 700;
+  }
+
+  .project-body { padding: 1.5rem; }
+
+  .project-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: var(--chrome);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .project-meta {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+  }
+  .project-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+    color: var(--chrome-light);
+  }
+
+  /* ABOUT */
+  .about-section { background: var(--steel-mid); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text { font-size: 0.98rem; color: var(--chrome-light); line-height: 1.9; }
+  .about-text p + p { margin-top: 1.2rem; }
+
+  .about-highlights { display: flex; flex-direction: column; gap: 1rem; }
+
+  .highlight-row {
+    display: flex; align-items: flex-start; gap: 1.2rem;
+    padding: 1.2rem;
+    background: var(--steel);
+    border-left: 2px solid var(--accent);
+  }
+
+  .hl-icon { font-size: 1.2rem; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+  .hl-text { font-size: 0.88rem; color: var(--chrome-light); }
+  .hl-title { font-weight: 600; color: var(--white); font-size: 0.9rem; margin-bottom: 0.2rem; font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* CONTACT */
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+
+  .contact-row {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border);
+    background: var(--steel-mid);
+  }
+
+  .contact-icon { color: var(--accent); font-family: 'Space Mono', monospace; font-size: 0.8rem; flex-shrink: 0; }
+  .contact-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--chrome); text-transform: uppercase; letter-spacing: 1px; }
+  .contact-val { font-size: 0.9rem; color: var(--white); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--chrome); letter-spacing: 1.5px; text-transform: uppercase; }
+
+  .form-input, .form-textarea {
+    background: var(--steel-light);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 0.75rem 1rem;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+  .form-textarea { height: 120px; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    background: #111316;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-left {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--chrome);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero-stats { gap: 1.5rem; }
+    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; padding: 1.5rem; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * { animation: fadeUp 0.7s ease forwards; opacity: 0; }
+  .hero-tag { animation-delay: 0.1s; }
+  .hero-name { animation-delay: 0.2s; }
+  .hero-title { animation-delay: 0.3s; }
+  .hero-desc { animation-delay: 0.4s; }
+  .hero-cta { animation-delay: 0.5s; }
+  .hero-stats { animation-delay: 0.6s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ME.PORTFOLIO</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="btn-primary" style="padding:0.55rem 1.4rem; font-size:0.68rem;">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-accent-bar"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Mechanical Engineer — Recent Graduate</div>
+    <h1 class="hero-name">YOUR<br><span>NAME</span><br>HERE</h1>
+    <p class="hero-title">B.E. Mechanical Engineering &nbsp;|&nbsp; Design &bull; Analysis &bull; Manufacturing</p>
+    <p class="hero-desc">
+      Passionate about transforming engineering challenges into optimized mechanical solutions.
+      Skilled in CAD modeling, FEA simulation, product design, and manufacturing processes.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-outline">Download Resume</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Projects Done</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Core Skills</div>
+      </div>
+      <div>
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Software Tools</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">&#9633; CAD</div>
+      <div class="skill-name">CAD / 3D Modeling</div>
+      <div class="skill-tools">SolidWorks &bull; CATIA V5<br>Part Modeling &bull; Assembly<br>Technical Drawings</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">&#9651; FEA</div>
+      <div class="skill-name">FEA / Simulation</div>
+      <div class="skill-tools">ANSYS Workbench &bull; Abaqus<br>Structural &bull; Thermal Analysis<br>Mesh Optimization</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">&#9655; PROTO</div>
+      <div class="skill-name">Product Design</div>
+      <div class="skill-tools">Concept Development<br>Rapid Prototyping &bull; DFM<br>GD&T &bull; Tolerance Analysis</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">&#9632; MFG</div>
+      <div class="skill-name">Manufacturing</div>
+      <div class="skill-tools">CNC Machining &bull; Casting<br>Sheet Metal &bull; Welding<br>Process Planning</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Design Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-thumb">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <circle cx="60" cy="40" r="30" stroke="#e8841a" stroke-width="1.5" fill="none"/>
+          <circle cx="60" cy="40" r="20" stroke="#8b9ab0" stroke-width="1" fill="none"/>
+          <circle cx="60" cy="40" r="5" fill="#e8841a"/>
+          <line x1="30" y1="40" x2="90" y2="40" stroke="#8b9ab0" stroke-width="0.8"/>
+          <line x1="60" y1="10" x2="60" y2="70" stroke="#8b9ab0" stroke-width="0.8"/>
+          <circle cx="60" cy="10" r="3" fill="#8b9ab0"/>
+          <circle cx="60" cy="70" r="3" fill="#8b9ab0"/>
+          <circle cx="30" cy="40" r="3" fill="#8b9ab0"/>
+          <circle cx="90" cy="40" r="3" fill="#8b9ab0"/>
+        </svg>
+        <div class="project-tag">CAD + FEA</div>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Gear Transmission System</div>
+        <p class="project-desc">Designed a multi-stage helical gear transmission for a conveyor application. Performed stress analysis and fatigue life prediction using ANSYS.</p>
+        <div class="project-meta">
+          <span class="project-pill">SolidWorks</span>
+          <span class="project-pill">ANSYS</span>
+          <span class="project-pill">FEA</span>
+          <span class="project-pill">Fatigue Analysis</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <rect x="20" y="20" width="80" height="40" rx="2" stroke="#e8841a" stroke-width="1.5" fill="none"/>
+          <rect x="35" y="30" width="50" height="20" rx="1" stroke="#8b9ab0" stroke-width="1" fill="rgba(139,154,176,0.1)"/>
+          <line x1="50" y1="20" x2="50" y2="60" stroke="#8b9ab0" stroke-width="0.8" stroke-dasharray="3,2"/>
+          <line x1="70" y1="20" x2="70" y2="60" stroke="#8b9ab0" stroke-width="0.8" stroke-dasharray="3,2"/>
+          <circle cx="25" cy="40" r="3" fill="#e8841a"/>
+          <circle cx="95" cy="40" r="3" fill="#e8841a"/>
+        </svg>
+        <div class="project-tag">Product Design</div>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Ergonomic Bracket Design</div>
+        <p class="project-desc">Conceptualized and prototyped an adjustable mounting bracket for industrial use. Optimized for weight reduction while maintaining structural integrity.</p>
+        <div class="project-meta">
+          <span class="project-pill">CATIA V5</span>
+          <span class="project-pill">DFM</span>
+          <span class="project-pill">Prototyping</span>
+          <span class="project-pill">GD&T</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <polyline points="20,60 40,20 60,45 80,30 100,55" stroke="#e8841a" stroke-width="2" fill="none"/>
+          <polyline points="20,60 40,50 60,55 80,48 100,60" stroke="#8b9ab0" stroke-width="1" fill="none" stroke-dasharray="4,2"/>
+          <line x1="20" y1="65" x2="100" y2="65" stroke="#6b7280" stroke-width="0.8"/>
+          <line x1="20" y1="15" x2="20" y2="65" stroke="#6b7280" stroke-width="0.8"/>
+          <text x="25" y="70" fill="#8b9ab0" font-size="7" font-family="monospace">Load (kN)</text>
+        </svg>
+        <div class="project-tag">Thermal Analysis</div>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Heat Exchanger Simulation</div>
+        <p class="project-desc">Modeled a shell-and-tube heat exchanger and performed CFD thermal analysis to optimize fin geometry and fluid flow patterns for maximum heat transfer.</p>
+        <div class="project-meta">
+          <span class="project-pill">ANSYS Fluent</span>
+          <span class="project-pill">CFD</span>
+          <span class="project-pill">Thermal</span>
+          <span class="project-pill">Optimization</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <rect x="30" y="25" width="60" height="30" rx="0" stroke="#e8841a" stroke-width="1.5" fill="none"/>
+          <line x1="30" y1="40" x2="90" y2="40" stroke="#8b9ab0" stroke-width="0.7"/>
+          <line x1="50" y1="25" x2="50" y2="55" stroke="#8b9ab0" stroke-width="0.7"/>
+          <line x1="70" y1="25" x2="70" y2="55" stroke="#8b9ab0" stroke-width="0.7"/>
+          <circle cx="60" cy="40" r="6" stroke="#e8841a" stroke-width="1" fill="rgba(232,132,26,0.15)"/>
+          <line x1="10" y1="40" x2="30" y2="40" stroke="#8b9ab0" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="90" y1="40" x2="110" y2="40" stroke="#8b9ab0" stroke-width="1.5"/>
+        </svg>
+        <div class="project-tag">Manufacturing</div>
+      </div>
+      <div class="project-body">
+        <div class="project-title">CNC Process Planning</div>
+        <p class="project-desc">Developed a complete process plan for machining a complex aluminum housing component — including tool selection, speeds, feeds, and fixture design.</p>
+        <div class="project-meta">
+          <span class="project-pill">CNC</span>
+          <span class="project-pill">CAM</span>
+          <span class="project-pill">Fixture Design</span>
+          <span class="project-pill">Aluminum</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <polygon points="60,15 90,55 30,55" stroke="#e8841a" stroke-width="1.5" fill="none"/>
+          <polygon points="60,25 80,55 40,55" stroke="#8b9ab0" stroke-width="0.8" fill="rgba(139,154,176,0.05)"/>
+          <line x1="60" y1="15" x2="60" y2="55" stroke="#8b9ab0" stroke-width="0.7" stroke-dasharray="3,2"/>
+          <circle cx="60" cy="55" r="2" fill="#e8841a"/>
+          <circle cx="30" cy="55" r="2" fill="#8b9ab0"/>
+          <circle cx="90" cy="55" r="2" fill="#8b9ab0"/>
+        </svg>
+        <div class="project-tag">Structural FEA</div>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Truss Bridge Static Analysis</div>
+        <p class="project-desc">Performed static structural analysis of a steel truss bridge model under various load combinations. Validated results against hand calculations and code requirements.</p>
+        <div class="project-meta">
+          <span class="project-pill">Abaqus</span>
+          <span class="project-pill">Structural</span>
+          <span class="project-pill">Steel</span>
+          <span class="project-pill">Load Analysis</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <rect x="40" y="30" width="40" height="25" rx="2" stroke="#e8841a" stroke-width="1.5" fill="none"/>
+          <rect x="55" y="20" width="10" height="10" rx="0" stroke="#8b9ab0" stroke-width="1" fill="none"/>
+          <line x1="60" y1="55" x2="60" y2="65" stroke="#8b9ab0" stroke-width="1"/>
+          <rect x="45" y="65" width="30" height="5" rx="0" stroke="#8b9ab0" stroke-width="0.8" fill="rgba(139,154,176,0.1)"/>
+          <circle cx="50" cy="42" r="4" stroke="#e8841a" stroke-width="1" fill="none"/>
+          <circle cx="70" cy="42" r="4" stroke="#e8841a" stroke-width="1" fill="none"/>
+        </svg>
+        <div class="project-tag">Design Project</div>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Automated Sorting Mechanism</div>
+        <p class="project-desc">Designed a cam-follower based automated sorting mechanism for small parts. Created detailed assembly drawings, BOM, and manufacturing documentation.</p>
+        <div class="project-meta">
+          <span class="project-pill">SolidWorks</span>
+          <span class="project-pill">Mechanism Design</span>
+          <span class="project-pill">Assembly</span>
+          <span class="project-pill">BOM</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">About Me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div>
+      <div class="about-text">
+        <p>I am a recent Mechanical Engineering graduate with a strong foundation in design, analysis, and manufacturing. My work combines rigorous engineering principles with a focus on real-world applicability.</p>
+        <p>Throughout my academic journey, I have worked on projects spanning CAD modeling in SolidWorks and CATIA, finite element analysis using ANSYS and Abaqus, product prototyping, and manufacturing process design.</p>
+        <p>I am passionate about solving complex mechanical problems and bringing designs from concept to production-ready solutions. I am actively seeking opportunities to contribute my skills to impactful engineering projects.</p>
+      </div>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-row">
+        <div class="hl-icon">&#9670;</div>
+        <div>
+          <div class="hl-title">Education</div>
+          <div class="hl-text">B.E. / B.Tech — Mechanical Engineering<br><span style="color:var(--chrome);font-size:0.82rem;">Your University Name — 2024</span></div>
+        </div>
+      </div>
+      <div class="highlight-row">
+        <div class="hl-icon">&#9670;</div>
+        <div>
+          <div class="hl-title">Software Tools</div>
+          <div class="hl-text">SolidWorks · CATIA V5 · ANSYS Workbench · Abaqus · AutoCAD · MATLAB</div>
+        </div>
+      </div>
+      <div class="highlight-row">
+        <div class="hl-icon">&#9670;</div>
+        <div>
+          <div class="hl-title">Certifications</div>
+          <div class="hl-text">SolidWorks CSWA &bull; Add your certifications here</div>
+        </div>
+      </div>
+      <div class="highlight-row">
+        <div class="hl-icon">&#9670;</div>
+        <div>
+          <div class="hl-title">Location</div>
+          <div class="hl-text">Madhya Pradesh, India &bull; Open to Relocation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-inner">
+    <div class="contact-info">
+      <p style="font-size:0.95rem; color:var(--chrome); margin-bottom:1rem; line-height:1.8;">
+        Open to full-time roles, internships, and freelance projects in mechanical design and analysis.
+      </p>
+      <div class="contact-row">
+        <div class="contact-icon">EMAIL</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-val">yourname@email.com</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">PHONE</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-val">+91 XXXXX XXXXX</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">LINK</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-val">linkedin.com/in/yourname</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">LOC</div>
+        <div>
+          <div class="contact-label">Location</div>
+          <div class="contact-val">Madhya Pradesh, India</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input class="form-input" type="text" placeholder="Recruiter / HR Name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" placeholder="hr@company.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Company / Organization</label>
+        <input class="form-input" type="text" placeholder="Company Name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell me about the role or project..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%; text-align:center;">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    &copy; 2025 &mdash; YOUR NAME &nbsp;|&nbsp; Mechanical Engineer
+  </div>
+  <div class="footer-links">
+    <a href="#home">Top</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
